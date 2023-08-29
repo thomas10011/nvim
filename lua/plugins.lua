@@ -53,6 +53,42 @@ return require('packer').startup(function(use)
         use { 'williamboman/mason-lspconfig.nvim'}
         -- use { 'neovim/nvim-lspconfig' }            -- previous installed
 
+        use {
+            'nvim-lualine/lualine.nvim',
+            config = [[require('config.lualine')]],
+            requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+        }
+
+        use {
+            'nvim-tree/nvim-tree.lua',
+            config = [[require('config.nvim-tree')]],
+            requires = {
+                'nvim-tree/nvim-web-devicons', -- optional
+            },
+        }
+
+        use {
+            'nvim-treesitter/nvim-treesitter',
+            config = [[require('config.nvim-treesitter')]],
+            run = function()
+                local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+                ts_update()
+            end,
+        }
+        
+        use {
+            'nvim-telescope/telescope.nvim', tag = '0.1.2',
+            -- or                            , branch = '0.1.x',
+            config = [[require('config.telescope')]],
+            requires = { {'nvim-lua/plenary.nvim'} }
+        }
+
+        use {
+            'numToStr/Comment.nvim',
+            config = function()
+                require('Comment').setup()
+            end
+        }
 
         -- Automatically set up your configuration after cloning packer.nvim
         -- Put this at the end after all plugins
